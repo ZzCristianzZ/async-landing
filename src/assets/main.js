@@ -10,15 +10,19 @@ const options = {
 
 const content = null || document.getElementById('content');
 
+// La logica de async : ir por los datos, esperar por ellos y finalmente retornarlos para transformalos a Objeto JSON
 async function fetchData(urlApi){
     const response = await fetch (urlApi, options)
     const data = await response.json();
     return data;
 }
+// Ejecutamos una Funcion Autoejecutable
 
 (async () =>{
     try{
         const videos = await fetchData(API);
+        // cuando analizamos la salida de la API en rapidapi, hay una jerarquía de los datos, están los 9 “items” del 0 al 8 para la posición de cada vídeo, luego el “snippet” de cada item, luego “thumbnails” y éste a su vez los tamaños de la imagen (nos interesa con la más alta resolución “high”), también nos interesa mostrar la descripción “description” y nombre “title” de cada vídeo:
+        
         let view = `
         ${videos.items.map(video =>`
         <div class="group relative">
